@@ -1,0 +1,368 @@
+/* =========================================
+   Variables Globales y Sistema de Diseño
+========================================= */
+:root {
+  --color-primary: #000000;
+  --color-secondary: #ffffff;
+  --color-accent: #c9a227; /* Elegante tono dorado para contraste */
+  --color-text-dark: #333333;
+  --color-text-light: #f8f9fa;
+  --color-bg-light: #fcfcfc;
+  --color-bg-gray: #f4f4f4;
+  --font-primary: Arial, Helvetica, sans-serif;
+  --font-secondary: "Times New Roman", Times, serif; /* Para titulares elegantes */
+  --transition-speed: 0.3s;
+}
+
+/* =========================================
+   Reset y Estilos Base
+========================================= */
+html, body {
+  height: 100%;
+  font-family: var(--font-primary);
+  background-color: var(--color-bg-light);
+  color: var(--color-text-dark);
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Permitir que el main tome el espacio restante para que el footer quede abajo */
+main {
+  flex: 1 0 auto;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-secondary);
+  font-weight: 700;
+}
+
+/* =========================================
+   Navegación (Header)
+========================================= */
+.navbar {
+  background-color: var(--color-primary);
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  font-family: var(--font-primary);
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--color-secondary) !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.navbar-brand .logo-circle {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--color-secondary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.nav-link {
+  color: #cccccc !important;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  transition: color var(--transition-speed);
+  position: relative;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--color-accent) !important;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-accent);
+  bottom: 0;
+  left: 0;
+  transition: width var(--transition-speed);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%;
+}
+
+/* =========================================
+   Hero Section / Carrusel
+========================================= */
+.carousel-item {
+  height: 60vh;
+  min-height: 400px;
+  background-color: #111;
+  color: white;
+  position: relative;
+}
+
+.carousel-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.carousel-item img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+  opacity: 0.5;
+}
+
+.hero-slogan {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+/* =========================================
+   Tarjetas y Elementos UI
+========================================= */
+.card-custom {
+  border: none;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.btn-custom {
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  border: 1px solid var(--color-primary);
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: all var(--transition-speed);
+}
+
+.btn-custom:hover {
+  background-color: transparent;
+  color: var(--color-primary);
+}
+
+/* =========================================
+   Footer
+========================================= */
+.footer {
+  background-color: var(--color-primary);
+  color: #ccc;
+  padding: 3rem 0 1rem;
+  flex-shrink: 0;
+}
+
+.footer h5 {
+  color: var(--color-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.footer a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+.footer a:hover {
+  color: var(--color-accent);
+}
+
+/* =========================================
+   Botón Flotante WhatsApp
+========================================= */
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 30px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: transform var(--transition-speed);
+  overflow: hidden; /* Para que la imagen se recorte exactamente con el borde curvo */
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  color: #FFF;
+}
+
+/* =========================================
+   Utilidades
+========================================= */
+.text-accent {
+  color: var(--color-accent);
+}
+
+.bg-gray {
+  background-color: var(--color-bg-gray);
+}
+
+.section-padding {
+  padding: 5rem 0;
+}
+
+.exchange-rate-banner {
+  background-color: var(--color-accent);
+  color: var(--color-primary);
+  text-align: center;
+  padding: 8px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   Clases Utilitarias
+========================================= */
+
+/* --- Iconos --- */
+.icon-md {
+  font-size: 1.5em;
+}
+
+.icon-lg {
+  font-size: 3rem;
+}
+
+.icon-md-margin {
+  font-size: 1.5em;
+  margin-right: 10px;
+}
+
+/* --- Encabezados y Headers --- */
+.header-primary-relative {
+  background-color: var(--color-primary);
+  position: relative;
+}
+
+/* Imagen de fondo para sección Nosotros */
+.hero-bg-about {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Imagen de fondo para sección Productos */
+.hero-bg-productos {
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+/* Capas de opacidad para encabezados con imagen */
+.overlay-70 {
+  opacity: 0.7;
+}
+
+.overlay-80 {
+  opacity: 0.8;
+}
+
+/* --- Contenedores Específicos --- */
+
+/* Ajuste de ancho para las tarjetas de Pedido en Línea */
+.container-pedido {
+  width: 100%;
+}
+
+/* --- Estilos para la Página del Autor --- */
+.main-content-autor {
+  min-height: calc(100vh - 200px);
+}
+
+.author-img-profile {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border: 4px solid var(--color-accent);
+}
+
+/* --- Estilos de Iconos Dinamicos --- */
+.logo-img { height: 40px; width: auto; border-radius: 50%; object-fit: contain; }
+.footer-icon { width: 20px; height: 20px; margin-right: 8px; object-fit: contain; }
+.footer-icon-social { width: 30px; height: 30px; object-fit: contain; transition: transform var(--transition-speed); }
+.footer-icon-social:hover { transform: scale(1.2); }
+.float-wa-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que la imagen rellene el circulo a la perfección */
+}
+
+/* Ícono de WhatsApp en botones */
+.btn-wa-icon {
+  height: 20px;
+  width: auto;
+  margin-right: 5px;
+  object-fit: contain;
+}
+
+/* Íconos dinámicos en servicios.html */
+.servicios-icon {
+  height: 28px;
+  width: auto;
+  margin-right: 8px;
+  object-fit: contain;
+  vertical-align: text-bottom;
+}
+
+/* Íconos dinámicos en about.html */
+.about-icon {
+  height: 48px;
+  width: auto;
+  margin-bottom: 1rem;
+  object-fit: contain;
+  display: inline-block;
+}
+
+/* Íconos dinámicos en autor.html */
+.autor-icon {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  vertical-align: middle;
+}
+
+.banner-icon { height: 20px; width: auto; margin-right: 8px; object-fit: contain; vertical-align: middle; display: inline-block; }
+
+/* =========================================
+   Estilos del Mapa (mapa.html)
+========================================= */
+/* Contenedor principal del mapa de Google Maps */
+#map {
+    height: 500px;
+    width: 100%;
+    border-radius: 10px;
+}
