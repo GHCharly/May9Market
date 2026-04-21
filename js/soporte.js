@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputEdadOculta = document.getElementById('edad_calculada');
 
     const form = document.getElementById('formSoporte');
+    const nombreInput = document.getElementById('nombre_completo');
 
     /* ======================================================
        Cálculo automático de la edad
@@ -74,6 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    if (nombreInput) {
+        nombreInput.addEventListener('input', () => {
+            // Mientras el usuario escribe, limpiamos el error
+            nombreInput.setCustomValidity('');
+            nombreInput.classList.remove('is-invalid', 'is-valid');
+        });
+    }
 
     /* ======================================================
        Validaciones y envío del formulario de soporte
@@ -89,39 +97,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
             event.preventDefault(); // Control total desde JS
 
-            // Validación del nombre completo (solo letras y espacios)
-            const nombreInput = document.getElementById('nombre_completo');
+            // 🔹 LIMPIAR SIEMPRE ANTES DE VALIDAR
+            nombreInput.setCustomValidity('');
+            nombreInput.classList.remove('is-invalid', 'is-valid');
 
-
-            if (nombreInput) {
-                nombreInput.addEventListener('input', () => {
-                    // Mientras el usuario escribe, limpiamos el error
-                    nombreInput.setCustomValidity('');
-                    nombreInput.classList.remove('is-invalid');
-                });
+            // 🔹 Validar nombre
+            const regexNombre = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/;
+            if (!regexNombre.test(nombreInput.value.trim())) {
+                nombreInput.setCustomValidity(
+                    'El nombre solo puede contener letras y espacios.'
+                );
+                nombreInput.classList.add('is-invalid');
+            } else {
+                nombreInput.classList.add('is-valid');
             }
 
-            if (nombreInput) {
-                const regexNombre = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/;
-
-                // SIEMPRE limpia antes de evaluar
-                nombreInput.setCustomValidity('');
-
-                if (!regexNombre.test(nombreInput.value.trim())) {
-                    nombreInput.setCustomValidity(
-                        'El nombre solo puede contener letras y espacios.'
-                    );
-                } else {
-                    nombreInput.setCustomValidity('');
-                }
-            }
             /**
              * Integración con validación HTML5:
              * Si el formulario no es válido,
              * se bloquea el envío.
              */
             if (!form.checkValidity()) {
-                event.preventDefault();
 
                 /**
                 * Clase de Bootstrap para mostrar
