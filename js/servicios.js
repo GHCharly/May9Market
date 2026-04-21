@@ -28,41 +28,59 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const formCotizacion = document.getElementById('formCotizacion');
 
+
+    const nombreInput = document.getElementById('nombre_completo');
+    const celularInput = document.getElementById('celular');
+
+    if (nombreInput) {
+        nombreInput.addEventListener('input', () => {
+            // Limpiar error personalizado
+            nombreInput.setCustomValidity('');
+
+            // Limpiar estado visual de error
+            nombreInput.classList.remove('is-invalid', 'is-valid');        });
+    }
+
+
+    if (celularInput) {
+        celularInput.addEventListener('input', () => {
+            celularInput.setCustomValidity('');
+            celularInput.classList.remove('is-invalid', 'is-valid');
+        });
+    }
+
+
+
     /* ======================================================
        Validaciones del formulario de cotización
        ====================================================== */
     if (formCotizacion) {
         formCotizacion.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-            /**
-             * Validación manual del número de celular.
-             * Se exige exactamente 8 dígitos numéricos,
-             * sin espacios ni guiones.
-             */
-            const celularInput = document.getElementById('celular');
-            if (celularInput) {
-                const regexCelular = /^\d{8}$/;
-                if (!regexCelular.test(celularInput.value.trim())) {
-                    // Mensaje personalizado de error para el campo de celular
-                    celularInput.setCustomValidity("El número debe contener exactamente 8 dígitos numéricos.");
-                } else {
-                    // Campo válido, se limpia el error personalizado.
-                    celularInput.setCustomValidity("");
-                }
+            // 🔹 LIMPIAR SIEMPRE PRIMERO
+            nombreInput.setCustomValidity('');
+            celularInput.setCustomValidity('');
+            nombreInput.classList.remove('is-invalid', 'is-valid');
+            celularInput.classList.remove('is-invalid', 'is-valid');
+
+            // 🔹 Validar nombre
+            const regexNombre = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/;
+            if (!regexNombre.test(nombreInput.value.trim())) {
+                nombreInput.setCustomValidity('El nombre solo puede contener letras y espacios.');
+                nombreInput.classList.add('is-invalid');
+            } else {
+                nombreInput.classList.add('is-valid');
             }
 
-            // Validación del nombre completo (solo letras y espacios)
-            const nombreInput = document.getElementById('nombre_completo');
-            if (nombreInput) {
-                const regexNombre = /^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ\s]+$/;
 
-                if (!regexNombre.test(nombreInput.value.trim())) {
-                    nombreInput.setCustomValidity(
-                        'El nombre solo puede contener letras y espacios.'
-                    );
-                } else {
-                    nombreInput.setCustomValidity('');
-                }
+            // 🔹 Validar celular
+            const regexCelular = /^\d{8}$/;
+            if (!regexCelular.test(celularInput.value.trim())) {
+                celularInput.setCustomValidity('Debe contener exactamente 8 dígitos numéricos.');
+                celularInput.classList.add('is-invalid');
+            } else {
+                celularInput.classList.add('is-valid');
             }
 
             /**
@@ -70,8 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
              * Si el formulario no es válido, se bloquea el envío.
              */
             if (!formCotizacion.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
 
                 // Mostrar errores SOLO cuando es inválido
                 /**
@@ -81,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formCotizacion.classList.add('was-validated');
 
             } else {
-                
+
                 /**
                  * Si todo es válido, se muestra un mensaje
                  * informativo al usuario.
